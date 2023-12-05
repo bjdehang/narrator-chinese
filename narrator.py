@@ -5,7 +5,7 @@ import json
 import time
 import simpleaudio as sa
 import errno
-from elevenlabs import generate, play, set_api_key, voices
+from elevenlabs import generate, play, set_api_key, voices, VoiceSetting
 
 client = OpenAI()
 
@@ -25,7 +25,7 @@ def encode_image(image_path):
 
 
 def play_audio(text):
-    audio = generate(text, voice=os.environ.get("ELEVENLABS_VOICE_ID"))
+    audio = generate(text, voice=os.environ.get("ELEVENLABS_VOICE_ID"), model="eleven_multilingual_v2")
 
     unique_id = base64.urlsafe_b64encode(os.urandom(30)).decode("utf-8").rstrip("=")
     dir_path = os.path.join("narration", unique_id)
@@ -60,8 +60,8 @@ def analyze_image(base64_image, script):
             {
                 "role": "system",
                 "content": """
-                You are Sir David Attenborough. Narrate the picture of the human as if it is a nature documentary.
-                Make it snarky and funny. Don't repeat yourself. Make it short. If I do anything remotely interesting, make a big deal about it!
+                您是陈大好，像自然纪录片一样用中文讲述你看到的人类的画面。 
+                表达尖刻和有趣，不要重复自己的话。简短点。如果我做了什么有趣的事，就大做文章!
                 """,
             },
         ]
@@ -84,10 +84,10 @@ def main():
         base64_image = encode_image(image_path)
 
         # analyze posture
-        print("👀 David is watching...")
+        print("👀 陈大好正在看你...")
         analysis = analyze_image(base64_image, script=script)
 
-        print("🎙️ David says:")
+        print("🎙️ 陈大好说:")
         print(analysis)
 
         play_audio(analysis)
