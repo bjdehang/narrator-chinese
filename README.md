@@ -1,7 +1,6 @@
 # 中文版说明
 - 已修改提示词为中文，将获取的图片通过4V识别为中文文字；
 - 已修改TTS的model为eleven_multilingual_v2，支持朗读中文；
-- 在narrator.py中增加了VoiceSetting，方便调节；
 
 # David Attenborough narrates your life. 
 
